@@ -3,9 +3,11 @@
 #ifndef OWL_STRING_H
 #define OWL_STRING_H
 
+#include <algorithm>
 #include <codecvt>
 #include <memory>
 #include <string>
+#include <sstream>
 #include <unordered_set>
 #include <vector>
 
@@ -16,6 +18,26 @@ namespace std {
 }
 
 namespace owl::string {
+	inline std::string tolower(std::string s) {
+		std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c) { return std::tolower(c); });
+		return s;
+	}
+
+	inline std::string toupper(std::string s) {
+		std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c) { return std::toupper(c); });
+		return s;
+	}
+
+	inline std::string replace(std::string s, const std::string& from, const std::string& to) {
+		std::string copy = s;
+		std::string::size_type n = 0;
+		while ((n = copy.find(from, n)) != std::string::npos) {
+			copy.replace(n, from.size(), to);
+			n += to.size();
+		}
+		return copy;
+	}
+
 	inline std::string trim(std::string s) {
 		s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) { return !std::isspace(ch); }));
 		s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) { return !std::isspace(ch); }).base(), s.end());
