@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <codecvt>
 #include <memory>
+#include <numeric>
 #include <string>
 #include <sstream>
 #include <unordered_set>
