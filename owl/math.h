@@ -9,6 +9,10 @@
 #include <numeric>
 
 namespace owl::math {
+    inline int double_to_int(double value) {
+        return (int)std::lround(value);
+    }
+
     template <typename T> inline bool are_equal(double x, T y, double error = 1e-4) {
         return (std::abs)(x - (double)y) < error;
     }
