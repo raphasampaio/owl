@@ -13,19 +13,19 @@ namespace owl::math {
         return (int)std::lround(value);
     }
 
-    template <typename T> inline bool approximately_equal(double a, T b, double epsilon = 1e-4) {
+    inline bool approximately_equal(double a, double b, double epsilon = 1e-4) {
         return std::abs(a - b) <= ((std::abs(a) < std::abs(b) ? std::abs(b) : std::abs(a)) * epsilon);
     }
 
-    template <typename T> inline bool essentially_equal(double a, T b, double epsilon = 1e-4) {
+    inline bool essentially_equal(double a, double b, double epsilon = 1e-4) {
         return std::abs(a - b) <= ((std::abs(a) > std::abs(b) ? std::abs(b) : std::abs(a)) * epsilon);
     }
 
-    template <typename T> inline bool definitely_greater_than(double a, T b, double epsilon = 1e-4) {
+    inline bool definitely_greater_than(double a, double b, double epsilon = 1e-4) {
         return (a - b) > ((std::abs(a) < std::abs(b) ? std::abs(b) : std::abs(a)) * epsilon);
     }
 
-    template <typename T> inline bool definitely_less_than(double a, T b, double epsilon = 1e-4) {
+    inline bool definitely_less_than(double a, double b, double epsilon = 1e-4) {
         return (b - a) > ((std::abs(a) < std::abs(b) ? std::abs(b) : std::abs(a)) * epsilon);
     }
 
