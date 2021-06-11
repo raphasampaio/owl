@@ -13,8 +13,20 @@ namespace owl::math {
         return (int)std::lround(value);
     }
 
-    template <typename T> inline bool are_equal(double x, T y, double error = 1e-4) {
-        return (std::abs)(x - (double)y) < error;
+    template <typename T> inline bool approximately_equal(double a, T b, double epsilon = 1e-4) {
+        return std::abs(a - b) <= ((std::abs(a) < std::abs(b) ? std::abs(b) : std::abs(a)) * epsilon);
+    }
+
+    template <typename T> inline bool essentially_equal(double a, T b, double epsilon = 1e-4) {
+        return std::abs(a - b) <= ((std::abs(a) > std::abs(b) ? std::abs(b) : std::abs(a)) * epsilon);
+    }
+
+    template <typename T> inline bool definitely_greater_than(double a, T b, double epsilon = 1e-4) {
+        return (a - b) > ((std::abs(a) < std::abs(b) ? std::abs(b) : std::abs(a)) * epsilon);
+    }
+
+    template <typename T> inline bool definitely_less_than(double a, T b, double epsilon = 1e-4) {
+        return (b - a) > ((std::abs(a) < std::abs(b) ? std::abs(b) : std::abs(a)) * epsilon);
     }
 
     inline int nth_element(std::vector<double>& v, double percent) {
