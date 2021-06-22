@@ -4,7 +4,6 @@
 #define OWL_STRING_H
 
 #include <algorithm>
-#include <codecvt>
 #include <memory>
 #include <numeric>
 #include <string>
@@ -19,6 +18,10 @@ namespace std {
 }
 
 namespace owl::string {
+	inline std::string remove_suffix(std::string s, int n) {
+		return s.substr(0, s.length() - n);
+	}
+
 	inline std::string tolower(std::string s) {
 		std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c) { return std::tolower(c); });
 		return s;
@@ -90,23 +93,6 @@ namespace owl::string {
 	template <typename T> inline std::string join_with_preffix(std::vector<T> v, std::string preffix, std::string delimiter = ",") {
 		return std::accumulate(std::begin(v), std::end(v), std::string(), [preffix, delimiter](std::string& ss, T p) { return ss.empty() ? (preffix + std::to_string(p)) : ss + delimiter + preffix + std::to_string(p); });
 	}
-
-	inline std::string ansi_to_utf8(const std::string& s) {
-		std::wstring wstr;
-		std::mbstate_t state = {};
-		const char* src = s.data();
-		size_t len = std::mbsrtowcs(nullptr, &src, 0, &state);
-		if (static_cast<size_t>(-1) != len) {
-			std::unique_ptr< wchar_t[] > buff(new wchar_t[len + 1]);
-			len = std::mbsrtowcs(buff.get(), &src, len, &state);
-			if (static_cast<size_t>(-1) != len) {
-				wstr.assign(buff.get(), len);
-			}
-		}
-
-        std::wstring_convert< std::codecvt_utf8<wchar_t> > wcv;
-        return wcv.to_bytes(wstr);
-    }
 }
 
 #endif
