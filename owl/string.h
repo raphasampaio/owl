@@ -10,6 +10,7 @@
 #include <sstream>
 #include <unordered_set>
 #include <vector>
+#include <random>
 
 namespace std {
 	inline std::string to_string(std::string s) {
@@ -18,6 +19,16 @@ namespace std {
 }
 
 namespace owl::string {
+	inline std::string random_string(int n = 16) {
+		const char* alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+		const size_t length = strlen(alphabet);
+		auto generator = [&]() { return alphabet[rand() % length]; };
+		std::string s;
+		s.reserve(n);
+		std::generate_n(back_inserter(s), n, generator);
+		return s;
+	}
+
 	inline std::string remove_suffix(std::string s, int n) {
 		return s.substr(0, s.length() - n);
 	}
