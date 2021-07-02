@@ -22,7 +22,7 @@ namespace owl::string {
 	inline std::string random_string(int n = 16) {
 		const char* alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 		const size_t length = strlen(alphabet);
-		auto generator = [&]() { return alphabet[rand() % length]; };
+		auto generator = [&]() { return alphabet[std::rand() % length]; };
 		std::string s;
 		s.reserve(n);
 		std::generate_n(back_inserter(s), n, generator);
