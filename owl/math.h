@@ -7,6 +7,8 @@
 #include <vector>
 #include <algorithm>
 #include <numeric>
+#include <utility>
+#include <limits>
 
 namespace owl::math {
     inline int double_to_int(double value) {
@@ -85,12 +87,7 @@ namespace owl::math {
         auto weights = owl::math::get_cvar_weights(v, alpha, false);
 
         double sum = 0;
-        auto size = v.size();
-
-        for (int i = 0; i < size; ++i) {
-            sum += weights[i] * v[i];
-        }
-
+        for (int i = 0, size = v.size(); i < size; ++i) { sum += weights[i] * v[i]; }
         return sum;
     }
 
@@ -98,11 +95,7 @@ namespace owl::math {
         auto weights = owl::math::get_cvar_weights(v, alpha, true);
 
         double sum = 0;
-        auto size = v.size();
-
-        for (int i = 0; i < size; ++i) {
-            sum += weights[i] * v[i];
-        }
+        for (int i = 0, size = v.size(); i < size; ++i) { sum += weights[i] * v[i]; }
         return sum;
     }
 
@@ -124,6 +117,32 @@ namespace owl::math {
 
     inline double round(double v, int digits) {
         return std::floor((v * std::pow(10.0, digits)) + .5) / std::pow(10.0, digits);
+    }
+
+    inline std::pair<int, int> find_nearest(std::vector<double>& v, int t) {
+        auto [min, max] = std::minmax_element(std::begin(v), std::end(v));
+
+        auto lb = *min;
+        int lb_index = min - std::begin(v);
+        
+        auto ub = *max;
+        int ub_index = max - std::begin(v);
+
+        for (size_t i = 0, size = v.size(); i < size; ++i) {
+            int value = v[i];
+
+            if (lb < value && value <= t) {
+                lb = value;
+                lb_index = i;
+            } 
+            
+            if (t <= value && value < ub) {
+                ub = value;
+                ub_index = i;
+            }
+        }
+
+        return std::make_pair(lb_index, ub_index);
     }
 }
 
