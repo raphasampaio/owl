@@ -119,14 +119,14 @@ namespace owl::math {
         return std::floor((v * std::pow(10.0, digits)) + .5) / std::pow(10.0, digits);
     }
 
-    inline std::pair<int, int> find_nearest(std::vector<double>& v, int t) {
+    inline std::pair<size_t, size_t> find_nearest(std::vector<double>& v, double t) {
         auto [min, max] = std::minmax_element(std::begin(v), std::end(v));
 
         auto lb = *min;
-        int lb_index = min - std::begin(v);
+        size_t lb_index = min - std::begin(v);
         
         auto ub = *max;
-        int ub_index = max - std::begin(v);
+        size_t ub_index = max - std::begin(v);
 
         for (size_t i = 0, size = v.size(); i < size; ++i) {
             int value = v[i];
