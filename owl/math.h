@@ -150,6 +150,28 @@ namespace owl::math {
         for (int i = 0, size = v.size(); i < size; ++i) { sum += v[i] / std::pow(1.0 + rate, i + 1); }
         return sum;
     }
+
+    inline double average(std::vector<double>& v) {
+        auto size = v.size();
+        return size == 0 ? 0 : (std::accumulate(std::begin(v), std::end(v), 0.0) / size);
+    }
+
+    inline double multiply(std::vector<double>& v) {
+        auto size = v.size();
+        return size == 0 ? 0 : std::accumulate(std::begin(v), std::end(v), 1.0, std::multiplies<double>());
+    }
+
+    inline double sum(std::vector<double>& v) {
+        return std::accumulate(std::begin(v), std::end(v), 0.0);
+    }
+
+    inline double minimum(std::vector<double>& v) {
+        return *std::min_element(std::begin(v), std::end(v));
+    }
+
+    inline double maximum(std::vector<double>& v) {
+        return *std::max_element(std::begin(v), std::end(v));
+    }
 }
 
 #endif
