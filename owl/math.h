@@ -147,7 +147,7 @@ namespace owl::math {
 
     inline double npv(std::vector<double>& v, double rate) {
         double sum = 0;
-        for (int i = 0, size = v.size(); i < size; ++i) { sum += v[i] / std::pow(1.0 + rate, i); }
+        for (int i = 0, size = v.size(); i < size; ++i) { sum += v[i] / std::pow(1.0 + rate, i + 1); }
         return sum;
     }
 }
