@@ -36,7 +36,7 @@ namespace owl::math {
         if (size == 1) { return 0; }
 
         std::vector<std::pair<double, int>> numbers;
-        for (int i = 0; i < size; ++i) { numbers.push_back(std::make_pair(v[i], i)); }
+        for (size_t i = 0; i < size; ++i) { numbers.push_back(std::make_pair(v[i], i)); }
 
         auto shift = (std::min)((int)std::floor((percent * numbers.size()) / 100), (int)numbers.size() - 1);
 
@@ -68,7 +68,7 @@ namespace owl::math {
         partial_weight *= scale;
 
         std::vector<double> weights;
-        for (int i = 0; i < size; ++i) {
+        for (size_t i = 0; i < size; ++i) {
             auto value = v[i];
 
             if (value > pivot) {
@@ -87,7 +87,7 @@ namespace owl::math {
         auto weights = owl::math::get_cvar_weights(v, alpha, false);
 
         double sum = 0;
-        for (int i = 0, size = v.size(); i < size; ++i) { sum += weights[i] * v[i]; }
+        for (size_t i = 0, size = v.size(); i < size; ++i) { sum += weights[i] * v[i]; }
         return sum;
     }
 
@@ -95,7 +95,7 @@ namespace owl::math {
         auto weights = owl::math::get_cvar_weights(v, alpha, true);
 
         double sum = 0;
-        for (int i = 0, size = v.size(); i < size; ++i) { sum += weights[i] * v[i]; }
+        for (size_t i = 0, size = v.size(); i < size; ++i) { sum += weights[i] * v[i]; }
         return sum;
     }
 
@@ -147,7 +147,7 @@ namespace owl::math {
 
     inline double npv(std::vector<double>& v, double rate) {
         double sum = 0;
-        for (int i = 0, size = v.size(); i < size; ++i) { sum += v[i] / std::pow(1.0 + rate, i + 1); }
+        for (size_t i = 0, size = v.size(); i < size; ++i) { sum += v[i] / std::pow(1.0 + rate, i + 1); }
         return sum;
     }
 
