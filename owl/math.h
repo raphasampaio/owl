@@ -119,6 +119,13 @@ namespace owl::math {
         return std::floor((v * std::pow(10.0, digits)) + .5) / std::pow(10.0, digits);
     }
 
+    inline double significant_digits(double v, int digits) {
+        if (v == 0.0) // otherwise it will return 'nan' due to the log10() of zero
+            return 0.0;
+        double factor = std::pow(10.0, digits - std::ceil(std::log10(std::fabs(v))));
+        return std::round(v * factor) / factor;
+    }
+
     inline std::pair<size_t, size_t> find_nearest(std::vector<double>& v, double t) {
         auto [min, max] = std::minmax_element(std::begin(v), std::end(v));
 
