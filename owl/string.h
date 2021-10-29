@@ -93,15 +93,26 @@ namespace owl::string {
 		return tokens;
 	}
 
-	template <typename T> inline std::string join(std::unordered_set<T> v, std::string delimiter = ",") {
+	template <typename T> inline std::string to_string_with_precision(const T v, const int n = 6) {
+		std::ostringstream out;
+		out.precision(n);
+		out << std::scientific << v;
+		return out.str();
+	}
+
+	template <typename T> inline std::string join(std::unordered_set<T> v, std::string delimiter = ", ") {
 		return std::accumulate(std::begin(v), std::end(v), std::string(), [delimiter](std::string& ss, T p) { return ss.empty() ? std::to_string(p) : ss + delimiter + std::to_string(p); });
 	}
 
-	template <typename T> inline std::string join(std::vector<T> v, std::string delimiter = ",") {
+	template <typename T> inline std::string join(std::vector<T> v, std::string delimiter = ", ") {
 		return std::accumulate(std::begin(v), std::end(v), std::string(), [delimiter](std::string& ss, T p) { return ss.empty() ? std::to_string(p) : ss + delimiter + std::to_string(p); });
 	}
 
-	template <typename T> inline std::string join_with_preffix(std::vector<T> v, std::string preffix, std::string delimiter = ",") {
+	template <typename T> inline std::string join_with_precision(std::vector<T> v, std::string delimiter = ", ") {
+		return std::accumulate(std::begin(v), std::end(v), std::string(), [delimiter](std::string& ss, T p) { return ss.empty() ? owl::string::to_string_with_precision(p) : ss + delimiter + owl::string::to_string_with_precision(p); });
+	}
+	
+	template <typename T> inline std::string join_with_preffix(std::vector<T> v, std::string preffix, std::string delimiter = ", ") {
 		return std::accumulate(std::begin(v), std::end(v), std::string(), [preffix, delimiter](std::string& ss, T p) { return ss.empty() ? (preffix + std::to_string(p)) : ss + delimiter + preffix + std::to_string(p); });
 	}
 }
