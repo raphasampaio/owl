@@ -37,35 +37,30 @@ namespace owl::math {
         return pairs;
     }
 
-    inline int nth_element_shift(int size, double percent) {
-        return (std::min)((int)std::floor((percent * size) / 100), size - 1);
-    }
-
-    inline int nth_element(std::vector<double>& v, double percent) {
+    inline int nth_element(std::vector<double>& v, double alpha) {
         auto size = v.size();
         if (size == 1) { return 0; }
 
         auto pairs = owl::math::vector_with_indices(v);
-        auto shift = owl::math::nth_element_shift(pairs.size(), percent);
+        auto shift = (std::min)((std::size_t)std::floor((alpha * size) / 100), size - 1);
 
         auto nth = pairs.begin() + shift;
         std::nth_element(pairs.begin(), nth, pairs.end());
         return (*nth).second;
     }
 
-    inline double quantile(std::vector<double>& v, double percent) {
+    inline double quantile(std::vector<double>& v, double alpha) {
         if (v.size() == 0) return 0;
 
-        auto nth = owl::math::nth_element(v, percent);
+        auto nth = owl::math::nth_element(v, alpha);
         return v[nth];
     }
 
     inline double cvar(std::vector<double>& v, double alpha, bool left = true) {
         auto size = v.size();
-        if (size == 1) { return v[0]; }
 
         auto pairs = owl::math::vector_with_indices(v);
-        auto shift = owl::math::nth_element_shift(pairs.size(), alpha) + 1;
+        auto shift = (std::max)((std::size_t)std::ceil((alpha * size) / 100), (std::size_t)1);
 
         if (left) {
             std::sort(std::begin(pairs), std::end(pairs));
@@ -73,7 +68,7 @@ namespace owl::math {
             std::sort(std::begin(pairs), std::end(pairs), std::greater<std::pair<double, int>>());
         }
 
-        double sum = 0;
+		double sum = 0;
         for (size_t i = 0; i < shift; ++i) {
             sum += pairs[i].first;
         }
