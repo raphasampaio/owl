@@ -65,7 +65,7 @@ namespace owl::math {
         if (size == 1) { return v[0]; }
 
         auto pairs = owl::math::vector_with_indices(v);
-        auto shift = owl::math::nth_element_shift(pairs.size(), alpha);
+        auto shift = owl::math::nth_element_shift(pairs.size(), alpha) + 1;
 
         if (left) {
             std::sort(std::begin(pairs), std::end(pairs));
@@ -77,7 +77,7 @@ namespace owl::math {
         for (size_t i = 0; i < shift; ++i) {
             sum += pairs[i].first;
         }
-		return sum / std::max(shift, 1);
+		return sum / shift;
     }
 
     inline double cvar_left(std::vector<double>& v, double alpha) {
