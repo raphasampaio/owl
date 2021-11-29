@@ -31,17 +31,25 @@ namespace owl::math {
         return (b - a) > ((std::abs(a) < std::abs(b) ? std::abs(b) : std::abs(a)) * epsilon);
     }
 
+    inline std::vector<std::pair<double, int>> vector_with_indices(std::vector<double>& v) {
+        std::vector<std::pair<double, int>> pairs;
+        for (size_t i = 0, size = v.size(); i < size; ++i) { pairs.push_back(std::make_pair(v[i], i)); }
+        return pairs;
+    }
+
+    inline int nth_element_shift(int size, double percent) {
+        return (std::min)((int)std::floor((percent * size) / 100), size - 1);
+    }
+
     inline int nth_element(std::vector<double>& v, double percent) {
         auto size = v.size();
         if (size == 1) { return 0; }
 
-        std::vector<std::pair<double, int>> numbers;
-        for (size_t i = 0; i < size; ++i) { numbers.push_back(std::make_pair(v[i], i)); }
+        auto pairs = owl::math::vector_with_indices(v);
+        auto shift = owl::math::nth_element_shift(pairs.size(), percent);
 
-        auto shift = (std::min)((int)std::floor((percent * numbers.size()) / 100), (int)numbers.size() - 1);
-
-        auto nth = numbers.begin() + shift;
-        std::nth_element(numbers.begin(), nth, numbers.end());
+        auto nth = pairs.begin() + shift;
+        std::nth_element(pairs.begin(), nth, pairs.end());
         return (*nth).second;
     }
 
@@ -52,51 +60,32 @@ namespace owl::math {
         return v[nth];
     }
 
-    inline std::vector<double> get_cvar_weights(std::vector<double>& v, double alpha, bool inverted) {
+    inline double cvar(std::vector<double>& v, double alpha, bool left = true) {
         auto size = v.size();
+        if (size == 1) { return v[0]; }
 
-        auto nth = owl::math::nth_element(v, alpha);
-        auto pivot = v[nth];
+        auto pairs = owl::math::vector_with_indices(v);
+        auto shift = owl::math::nth_element_shift(pairs.size(), alpha);
 
-        auto weight = 1.0 / (double)size;
-        auto full_parts = (int)std::floor((alpha / 100.0) / weight);
-        auto partial_weight = (alpha / 100.0) - (full_parts * weight);
-
-        // SCALE TO 100%
-        auto scale = 100.0 / alpha;
-        weight *= scale;
-        partial_weight *= scale;
-
-        std::vector<double> weights;
-        for (size_t i = 0; i < size; ++i) {
-            auto value = v[i];
-
-            if (value > pivot) {
-                weights.push_back(inverted ? weight : 0);
-            } else if (value < pivot) {
-                weights.push_back(inverted ? 0 : weight);
-            } else { // i == nth
-                weights.push_back(partial_weight);
-            }
+        if (left) {
+            std::sort(std::begin(pairs), std::end(pairs));
+        } else {
+            std::sort(std::begin(pairs), std::end(pairs), std::greater<std::pair<double, int>>());
         }
 
-        return weights;
+        double sum = 0;
+        for (size_t i = 0; i < shift; ++i) {
+            sum += pairs[i].first;
+        }
+		return sum / std::max(shift, 1);
     }
 
     inline double cvar_left(std::vector<double>& v, double alpha) {
-        auto weights = owl::math::get_cvar_weights(v, alpha, false);
-
-        double sum = 0;
-        for (size_t i = 0, size = v.size(); i < size; ++i) { sum += weights[i] * v[i]; }
-        return sum;
+        return cvar(v, alpha, true);
     }
 
     inline double cvar_right(std::vector<double>& v, double alpha) {
-        auto weights = owl::math::get_cvar_weights(v, alpha, true);
-
-        double sum = 0;
-        for (size_t i = 0, size = v.size(); i < size; ++i) { sum += weights[i] * v[i]; }
-        return sum;
+        return cvar(v, alpha, false);
     }
 
     inline double stddev(std::vector<double>& v) {
