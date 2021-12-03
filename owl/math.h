@@ -68,11 +68,11 @@ namespace owl::math {
             std::sort(std::begin(pairs), std::end(pairs), std::greater<std::pair<double, int>>());
         }
 
-		double sum = 0;
+        double sum = 0;
         for (size_t i = 0; i < shift; ++i) {
             sum += pairs[i].first;
         }
-		return sum / shift;
+        return sum / shift;
     }
 
     inline double cvar_left(std::vector<double>& v, double alpha) {
