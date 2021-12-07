@@ -153,15 +153,15 @@ namespace owl::math {
     }
 
     inline double sum(std::vector<double>& v) {
-        return std::accumulate(std::begin(v), std::end(v), 0.0);
+        return v.size() == 0 ? 0 : std::accumulate(std::begin(v), std::end(v), 0.0);
     }
 
     inline double minimum(std::vector<double>& v) {
-        return *std::min_element(std::begin(v), std::end(v));
+        return v.size() == 0 ? 0 : *std::min_element(std::begin(v), std::end(v));
     }
 
     inline double maximum(std::vector<double>& v) {
-        return *std::max_element(std::begin(v), std::end(v));
+        return v.size() == 0 ? 0 : *std::max_element(std::begin(v), std::end(v));
     }
 }
 
