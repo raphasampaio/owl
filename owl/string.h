@@ -7,6 +7,7 @@
 #include <memory>
 #include <numeric>
 #include <string>
+#include <cstring>
 #include <sstream>
 #include <unordered_set>
 #include <vector>
@@ -23,7 +24,7 @@ namespace std {
 namespace owl::string {
     inline std::string random_string(int n = 16) {
         const char* alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        const size_t length = strlen(alphabet);
+        const size_t length = std::strlen(alphabet);
         auto generator = [&]() { return alphabet[std::rand() % length]; };
         std::string s;
         s.reserve(n);
