@@ -12,6 +12,7 @@
 #include <vector>
 #include <random>
 #include <codecvt>
+#include <locale>
 
 namespace std {
     inline std::string to_string(std::string s) {
