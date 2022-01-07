@@ -12,6 +12,13 @@ namespace std {
             return string_hasher(v.first) ^ string_hasher(v.second);
         }
     };
+
+    template <> struct hash<std::pair<int, int>> {
+        inline size_t operator()(const std::pair<int, int>& v) const {
+            std::hash<int> int_hasher;
+            return int_hasher(v.first) ^ int_hasher(v.second);
+        }
+    };
 }
 
 #endif
