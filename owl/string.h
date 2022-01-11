@@ -115,8 +115,8 @@ namespace owl::string {
         return std::accumulate(std::begin(v), std::end(v), std::string(), [delimiter](std::string& ss, T p) { return ss.empty() ? owl::string::to_string_with_precision(p) : ss + delimiter + owl::string::to_string_with_precision(p); });
     }
     
-    template <typename T> inline std::string join_with_preffix(std::vector<T> v, std::string preffix, std::string delimiter = ", ") {
-        return std::accumulate(std::begin(v), std::end(v), std::string(), [preffix, delimiter](std::string& ss, T p) { return ss.empty() ? (preffix + std::to_string(p)) : ss + delimiter + preffix + std::to_string(p); });
+    template <typename T> inline std::string join_with_prefix(std::vector<T> v, std::string prefix, std::string delimiter = ", ") {
+        return std::accumulate(std::begin(v), std::end(v), std::string(), [prefix, delimiter](std::string& ss, T p) { return ss.empty() ? (prefix + std::to_string(p)) : ss + delimiter + prefix + std::to_string(p); });
     }
 
     inline std::string ansi_to_utf8(const std::string& s) {
