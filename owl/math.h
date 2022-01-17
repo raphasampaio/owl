@@ -11,6 +11,44 @@
 #include <limits>
 
 namespace owl::math {
+    template <typename type> inline std::vector<type> zeros(int d1) {
+        return std::vector<type>(d1, 0);
+    }
+
+    template <typename type> inline std::vector<type> ones(int d1) {
+        return std::vector<type>(d1, 1);
+    }
+
+    template <typename type> inline std::vector<std::vector<type>> zeros(int d1, int d2) {
+        return std::vector<std::vector<type>>(d1, std::vector<type>(d2, 0));
+    }
+
+    template <typename type> inline std::vector<std::vector<type>> ones(int d1, int d2) {
+        return std::vector<std::vector<type>>(d1, std::vector<type>(d2, 1));
+    }
+
+    template <typename type> inline std::vector<std::vector<std::vector<type>>> zeros(int d1, int d2, int d3) {
+        return std::vector<std::vector<std::vector<type>>>(d1, std::vector<std::vector<type>>(d2, std::vector<type>(d3, 0)));
+    }
+
+    template <typename type> inline std::vector<std::vector<std::vector<type>>> ones(int d1, int d2, int d3) {
+        return std::vector<std::vector<std::vector<type>>>(d1, std::vector<std::vector<type>>(d2, std::vector<type>(d3, 1)));
+    }
+
+    template <typename type> inline std::vector<std::vector<std::vector<std::vector<type>>>> zeros(int d1, int d2, int d3, int d4) {
+        return std::vector<std::vector<std::vector<std::vector<type>>>>(d1, std::vector<std::vector<std::vector<type>>>(d2, std::vector<std::vector<type>>(d3, std::vector<type>(d4, 0))));
+    }
+
+    template <typename type> inline std::vector<std::vector<std::vector<std::vector<type>>>> ones(int d1, int d2, int d3, int d4) {
+        return std::vector<std::vector<std::vector<std::vector<type>>>>(d1, std::vector<std::vector<std::vector<type>>>(d2, std::vector<std::vector<type>>(d3, std::vector<type>(d4, 1))));
+    }
+
+    template <typename type> inline std::vector<type> collect(int from, int to) {
+        std::vector<type> v(to - from + 1);
+        std::iota(v.begin(), v.end(), from);
+        return v;
+    }
+
     inline int double_to_int(double value) {
         return (int)std::lround(value);
     }
