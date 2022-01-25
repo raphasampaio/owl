@@ -71,7 +71,7 @@ namespace owl::math {
 
     inline std::vector<std::pair<double, int>> vector_with_indices(std::vector<double>& v) {
         std::vector<std::pair<double, int>> pairs;
-        for (size_t i = 0, size = v.size(); i < size; ++i) { pairs.push_back(std::make_pair(v[i], i)); }
+        for (std::size_t i = 0, size = v.size(); i < size; ++i) { pairs.push_back(std::make_pair(v[i], i)); }
         return pairs;
     }
 
@@ -107,7 +107,7 @@ namespace owl::math {
         }
 
         double sum = 0;
-        for (size_t i = 0; i < shift; ++i) {
+        for (std::size_t i = 0; i < shift; ++i) {
             sum += pairs[i].first;
         }
         return sum / shift;
@@ -148,16 +148,16 @@ namespace owl::math {
         return std::round(v * factor) / factor;
     }
 
-    inline std::pair<size_t, size_t> find_nearest(std::vector<double>& v, double t) {
+    inline std::pair<std::size_t, std::size_t> find_nearest(std::vector<double>& v, double t) {
         auto [min, max] = std::minmax_element(std::begin(v), std::end(v));
 
         auto lb = *min;
-        size_t lb_index = min - std::begin(v);
+        std::size_t lb_index = min - std::begin(v);
         
         auto ub = *max;
-        size_t ub_index = max - std::begin(v);
+        std::size_t ub_index = max - std::begin(v);
 
-        for (size_t i = 0, size = v.size(); i < size; ++i) {
+        for (std::size_t i = 0, size = v.size(); i < size; ++i) {
             int value = v[i];
 
             if (lb < value && value <= t) {
@@ -176,7 +176,7 @@ namespace owl::math {
 
     inline double npv(std::vector<double>& v, double rate) {
         double sum = 0;
-        for (size_t i = 0, size = v.size(); i < size; ++i) { sum += v[i] / std::pow(1.0 + rate, i + 1); }
+        for (std::size_t i = 0, size = v.size(); i < size; ++i) { sum += v[i] / std::pow(1.0 + rate, i + 1); }
         return sum;
     }
 
