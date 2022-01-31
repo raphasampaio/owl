@@ -19,6 +19,20 @@ namespace std {
             return int_hasher(v.first) ^ int_hasher(v.second);
         }
     };
+
+    template <> struct hash<std::tuple<int, int>> {
+        inline size_t operator()(const std::tuple<int, int>& v) const {
+            std::hash<int> int_hasher;
+            return int_hasher(std::get<0>(v)) ^ int_hasher(std::get<1>(v));
+        }
+    };
+
+    template <> struct hash<std::tuple<int, int, int>> {
+        inline size_t operator()(const std::tuple<int, int, int>& v) const {
+            std::hash<int> int_hasher;
+            return int_hasher(std::get<0>(v)) ^ int_hasher(std::get<1>(v)) ^ int_hasher(std::get<2>(v));
+        }
+    };
 }
 
 #endif
