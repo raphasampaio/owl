@@ -8,25 +8,25 @@
 #include <sstream>
 
 namespace owl::color {
-    struct RGB { 
+    struct Color { 
         int r, g, b; 
-        RGB(int r, int g, int b) : r(r), g(g), b(b) {}
+        Color(int r, int g, int b) : r(r), g(g), b(b) {}
     };
 
-    inline RGB toRGB(std::string hex) {
+    inline Color toRGB(std::string hex) {
         int r, g, b;
         std::sscanf(hex.c_str(), "#%02x%02x%02x", &r, &g, &b);
-        return RGB(r, g, b);
+        return Color(r, g, b);
     }
 
-    inline std::string toHEX(RGB color) {
+    inline std::string toHEX(Color color) {
         std::stringstream ss;
         ss << "#" << std::hex << (color.r << 16 | color.g << 8 | color.b);
         return ss.str();
     }
 
-    inline RGB interpolate(RGB a, RGB b, double t) {
-        return RGB(a.r + (b.r - a.r) * t, a.g + (b.g - a.g) * t, a.b + (b.b - a.b) * t);
+    inline Color interpolate(Color a, Color b, double t) {
+        return Color(a.r + (b.r - a.r) * t, a.g + (b.g - a.g) * t, a.b + (b.b - a.b) * t);
     }
 }
 
