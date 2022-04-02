@@ -20,8 +20,10 @@ namespace owl::color {
     }
 
     inline std::string toHEX(Color color) {
-        std::stringstream ss;
-        ss << "#" << std::hex << (color.r << 16 | color.g << 8 | color.b);
+        std::ostringstream ss;
+        ss.flags(std::ios_base::hex | std::ios_base::left);
+        ss.fill('0');
+        ss << "#" << std::setw(2) << color.r << std::setw(2) << color.g << std::setw(2) << color.b;
         return ss.str();
     }
 
