@@ -54,11 +54,11 @@ namespace owl::math {
     }
 
     inline bool approximately_equal(double a, double b, double epsilon = 1e-4) {
-        return std::abs(a - b) <= ((std::abs(a) < std::abs(b) ? std::abs(b) : std::abs(a)) * epsilon);
+        return std::abs(a - b) <= (std::max(std::abs(a), std::abs(b)) * epsilon);
     }
 
     inline bool essentially_equal(double a, double b, double epsilon = 1e-4) {
-        return std::abs(a - b) <= ((std::abs(a) > std::abs(b) ? std::abs(b) : std::abs(a)) * epsilon);
+        return std::abs(a - b) <= (std::min(std::abs(a), std::abs(b)) * epsilon);
     }
 
     inline bool definitely_greater_than(double a, double b, double epsilon = 1e-4) {
