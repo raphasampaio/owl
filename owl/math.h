@@ -54,19 +54,19 @@ namespace owl::math {
     }
 
     inline bool approximately_equal(double a, double b, double epsilon = 1e-4) {
-        return std::abs(a - b) <= (std::max(std::abs(a), std::abs(b)) * epsilon);
+        return std::abs(a - b) <= (epsilon * std::max(std::abs(a), std::abs(b)));
     }
 
     inline bool essentially_equal(double a, double b, double epsilon = 1e-4) {
-        return std::abs(a - b) <= (std::min(std::abs(a), std::abs(b)) * epsilon);
+        return std::abs(a - b) <= (epsilon * std::min(std::abs(a), std::abs(b)));
     }
 
     inline bool definitely_greater_than(double a, double b, double epsilon = 1e-4) {
-        return (a - b) > ((std::abs(a) < std::abs(b) ? std::abs(b) : std::abs(a)) * epsilon);
+        return (a - b) > (epsilon * std::max(std::abs(a), std::abs(b)));
     }
 
     inline bool definitely_less_than(double a, double b, double epsilon = 1e-4) {
-        return (b - a) > ((std::abs(a) < std::abs(b) ? std::abs(b) : std::abs(a)) * epsilon);
+        return (b - a) > (epsilon * std::max(std::abs(a), std::abs(b)));
     }
 
     inline std::vector<std::pair<double, int>> vector_with_indices(std::vector<double>& v) {
