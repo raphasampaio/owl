@@ -55,12 +55,12 @@ namespace owl::math {
 
     inline bool approximately_equal(double a, double b, double rtol = 1e-4, double atol = 0) {
         //return std::abs(a - b) <= (epsilon * std::max(std::abs(a), std::abs(b)));
-        return a == b || (std::isinf(a) && std::isinf(b) && std::abs(a - b) <= std::max(atol, rtol * std::max(std::abs(a), std::abs(b))));
+        return a == b || (std::isfinite(a) && std::isfinite(b) && std::abs(a - b) <= std::max(atol, rtol * std::max(std::abs(a), std::abs(b))));
     }
 
     inline bool essentially_equal(double a, double b, double rtol = 1e-4, double atol = 0) {
         //return std::abs(a - b) <= (epsilon * std::min(std::abs(a), std::abs(b)));
-        return a == b || (std::isinf(a) && std::isinf(b) && std::abs(a - b) <= std::max(atol, rtol * std::min(std::abs(a), std::abs(b))));
+        return a == b || (std::isfinite(a) && std::isfinite(b) && std::abs(a - b) <= std::max(atol, rtol * std::min(std::abs(a), std::abs(b))));
     }
 
     inline bool definitely_greater_than(double a, double b, double epsilon = 1e-4) {
