@@ -3,6 +3,7 @@
 #ifndef OWL_VECTOR_H
 #define OWL_VECTOR_H
 
+#include <algorithm>
 #include <unordered_set>
 #include <vector>
 
@@ -20,6 +21,10 @@ namespace owl::vector {
         });
 
         v.erase(new_end, v.end());
+    }
+
+    template <typename type> inline bool has(std::vector<type>& v, type item) {
+        return std::find(v.begin(), v.end(), item) != v.end();
     }
 }
 
