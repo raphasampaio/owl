@@ -11,6 +11,10 @@
 #include <limits>
 
 namespace owl::math {
+    inline int mod(int a, int base) {
+        return (a < 0 ? ((a % base) + base) % base : a % base);
+    }
+
     template <typename type> inline std::vector<type> zeros(int d1) {
         return std::vector<type>(d1, 0);
     }
@@ -49,8 +53,12 @@ namespace owl::math {
         return v;
     }
 
-    inline int double_to_int(double value) {
-        return (int)std::lround(value);
+    inline int double_to_int(double v) {
+        return static_cast<int>(std::lround(v));
+    }
+
+    inline int floor(double v) {
+        return static_cast<int>(std::floor(v));
     }
 
     inline bool approximately_equal(double a, double b, double rtol = 1e-4, double atol = 0) {
