@@ -11,6 +11,10 @@
 #include <limits>
 
 namespace owl::math {
+    inline int mod(int a, int base) {
+        return (a < 0 ? ((a % base) + base) % base : a % base);
+    }
+
     template <typename type> inline std::vector<type> zeros(int d1) {
         return std::vector<type>(d1, 0);
     }
@@ -49,24 +53,30 @@ namespace owl::math {
         return v;
     }
 
-    inline int double_to_int(double value) {
-        return (int)std::lround(value);
+    inline int double_to_int(double v) {
+        return static_cast<int>(std::lround(v));
     }
 
-    inline bool approximately_equal(double a, double b, double epsilon = 1e-4) {
-        return std::abs(a - b) <= ((std::abs(a) < std::abs(b) ? std::abs(b) : std::abs(a)) * epsilon);
+    inline int floor(double v) {
+        return static_cast<int>(std::floor(v));
     }
 
-    inline bool essentially_equal(double a, double b, double epsilon = 1e-4) {
-        return std::abs(a - b) <= ((std::abs(a) > std::abs(b) ? std::abs(b) : std::abs(a)) * epsilon);
+    inline bool approximately_equal(double a, double b, double rtol = 1e-4, double atol = 0) {
+        //return std::abs(a - b) <= (epsilon * std::max(std::abs(a), std::abs(b)));
+        return a == b || (std::isfinite(a) && std::isfinite(b) && std::abs(a - b) <= std::max(atol, rtol * std::max(std::abs(a), std::abs(b))));
+    }
+
+    inline bool essentially_equal(double a, double b, double rtol = 1e-4, double atol = 0) {
+        //return std::abs(a - b) <= (epsilon * std::min(std::abs(a), std::abs(b)));
+        return a == b || (std::isfinite(a) && std::isfinite(b) && std::abs(a - b) <= std::max(atol, rtol * std::min(std::abs(a), std::abs(b))));
     }
 
     inline bool definitely_greater_than(double a, double b, double epsilon = 1e-4) {
-        return (a - b) > ((std::abs(a) < std::abs(b) ? std::abs(b) : std::abs(a)) * epsilon);
+        return (a - b) > (epsilon * std::max(std::abs(a), std::abs(b)));
     }
 
     inline bool definitely_less_than(double a, double b, double epsilon = 1e-4) {
-        return (b - a) > ((std::abs(a) < std::abs(b) ? std::abs(b) : std::abs(a)) * epsilon);
+        return (b - a) > (epsilon * std::max(std::abs(a), std::abs(b)));
     }
 
     inline std::vector<std::pair<double, int>> vector_with_indices(std::vector<double>& v) {
