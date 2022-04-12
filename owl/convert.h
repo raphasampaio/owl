@@ -6,15 +6,15 @@
 #include <owl/constant.h>
 
 namespace owl::convert {
-    inline double MWtoPU(double value) {
+    inline double mw_to_pu(double value) {
         return value / 100.0;
     }
 
-    inline double PUtoMW(double value) {
+    inline double pu_to_mw(double value) {
         return value * 100.0;
     }
 
-    inline double degreeToRadian(double value) {
+    inline double degree_to_radian(double value) {
         return (value * owl::constant::pi) / 180;
     }
 }
