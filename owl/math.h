@@ -168,7 +168,7 @@ namespace owl::math {
         std::size_t ub_index = max - std::begin(v);
 
         for (std::size_t i = 0, size = v.size(); i < size; ++i) {
-            int value = v[i];
+            auto value = v[i];
 
             if (lb < value && value <= t) {
                 lb = value;
