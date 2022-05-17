@@ -20,15 +20,17 @@ namespace owl::color {
     }
 
     inline std::string toHEX(Color color) {
-        std::ostringstream ss;
-        ss.flags(std::ios_base::hex | std::ios_base::left);
-        ss.fill('0');
-        ss << "#" << std::setw(2) << color.r << std::setw(2) << color.g << std::setw(2) << color.b;
-        return ss.str();
+        char hex_color[8];
+        std::snprintf(hex_color, sizeof hex_color, "#%02x%02x%02x", color.r, color.g, color.b);
+        return std::string(hex_color);
     }
 
     inline Color interpolate(Color a, Color b, double t) {
-        return Color(a.r + (b.r - a.r) * t, a.g + (b.g - a.g) * t, a.b + (b.b - a.b) * t);
+        return Color(
+            a.r + (b.r - a.r) * t, 
+            a.g + (b.g - a.g) * t, 
+            a.b + (b.b - a.b) * t
+        );
     }
 }
 
